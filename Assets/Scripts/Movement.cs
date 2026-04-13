@@ -25,7 +25,6 @@ public class Movement : MonoBehaviour
         }
         if (Input.GetKeyUp("left shift"))
         {
-            //FEEEELLL
             speed = 3;
         }
     }
