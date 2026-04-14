@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public float speed = 3f;
+    public float speed = 150f;
     private Rigidbody2D rb;
     private Vector2 input;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,16 +21,16 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown("left shift"))
         {
-            speed = 5f;
+            speed = 200f;
         }
         if (Input.GetKeyUp("left shift"))
         {
-            speed = 3;
+            speed = 150f;
         }
     }
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = input * speed;
+        rb.linearVelocity = input * speed * Time.deltaTime;
     }
 }
