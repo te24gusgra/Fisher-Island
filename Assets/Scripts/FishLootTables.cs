@@ -22,11 +22,11 @@ public class FishLootTables : MonoBehaviour
         ["Surgeon"] = 15,
     };
 
-    static public Dictionary<string, int> MuddPuddle = new Dictionary<string, int>()
+   /* static public Dictionary<string, int> MuddPuddle = new Dictionary<string, int>()
     {
         ["RustyCan"] = 95,
         ["Worm"] = 5,
-    };
+    };*/
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

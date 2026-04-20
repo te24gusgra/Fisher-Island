@@ -15,14 +15,16 @@ public class Fishing : MonoBehaviour
     void Update()
     {
     }
-
     static public void WeightedRandom(Dictionary<string, int> WeightedDictionary)
-    {  
+    {
         int TotalWeight = 0;
 
-        foreach (KeyValuePair<string, int> pair in WeightedDictionary))
+        foreach (KeyValuePair<string, int> pair in WeightedDictionary)
         {
-            
+            TotalWeight += pair.Value;
         }
+
+        int chance = Random.Range(1,TotalWeight+1);
+
     }
 }
