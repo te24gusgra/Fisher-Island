@@ -13961,6 +13961,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fishing
   fishLootTables: {fileID: 1422722719}
+  selectedItem: 
+  waterType: 
+  rand: 0
 --- !u!4 &694368562
 Transform:
   m_ObjectHideFlags: 0
@@ -15402,6 +15405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   speed: 150
+  animator: {fileID: 1837429353}
 --- !u!50 &1837429349
 Rigidbody2D:
   serializedVersion: 5
@@ -15478,7 +15482,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 434ac537226cc404eb83bb28ca3b37cf, type: 3}
+  m_Sprite: {fileID: 1957369032, guid: a070e63127dca634bb657721a927def5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -15538,7 +15542,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.03663215, y: -0.25298405}
+  m_Offset: {x: 0.03663215, y: -0.4334612}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -15548,20 +15552,30 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.48715204, y: 0.26757956}
+  m_Size: {x: 0.48715204, y: 0.13611364}
   m_EdgeRadius: 0
---- !u!114 &1837429353
-MonoBehaviour:
+--- !u!95 &1837429353
+Animator:
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837429347}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 078904ef863c0c94da60732c3b2f0972, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d8bbeddd0ef86a84d8fdada32d9fd52d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

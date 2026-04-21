@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -5,6 +6,8 @@ public class Movement : MonoBehaviour
     public float speed = 150f;
     private Rigidbody2D rb;
     private Vector2 input;
+
+    [SerializeField] private Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,6 +30,11 @@ public class Movement : MonoBehaviour
         {
             speed = 150f;
         }
+
+        animator.SetBool("IsWalkingDown", Input.GetKey("s"));
+        animator.SetBool("IsWalkingUp", Input.GetKey("w"));
+        animator.SetBool("IsWalkingRight", Input.GetKey("d"));
+        animator.SetBool("IsWalkingLeft", Input.GetKey("a"));
     }
 
     private void FixedUpdate()
