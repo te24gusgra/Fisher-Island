@@ -8,6 +8,7 @@ public class Fishing : MonoBehaviour
 {
     // Getting the dictionaries
     public FishLootTables fishLootTables;
+    public InventoryScript inventoryscript;
 
     //Variables
     public string selectedItem;
@@ -24,9 +25,10 @@ public class Fishing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Starts when the user presses r
+        //Starts when the user presses f
         if (Input.GetKeyDown("f"))
         {
+            
             if (rand == 1)
             {
                 //Goes down to the function below, changing the dictionary to FreshWater found in the FishLootTables script and sets the water type to fresh water
@@ -42,6 +44,15 @@ public class Fishing : MonoBehaviour
 
             //Prints out what type of water you fished in and what you got in the console
             Debug.Log($"You fished in {waterType} and got a {selectedItem}");
+            //Tries to create a new object in the inventory with the fish that got fished up 
+            try
+            {
+                InventoryScript.Inventory.Add(selectedItem, 0);
+            }
+            //If the object already exits it just skips
+            catch { }
+            //Adds the fish into the inventory
+            InventoryScript.Inventory[selectedItem]++;
         }
     }
     //Creates a function called WeightedRandom and gives it a dictionary
