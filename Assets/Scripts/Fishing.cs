@@ -3,12 +3,19 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Fishing : MonoBehaviour
 {
     // Getting the dictionaries
     public FishLootTables fishLootTables;
     public InventoryScript inventoryscript;
+
+    public Transform player;
+
+    GameObject[] tileMapsContainers;
+    Tilemap[] tileMaps;
+
 
     //Variables
     public string selectedItem;
@@ -20,6 +27,32 @@ public class Fishing : MonoBehaviour
     {
         //Chooses the number 1 or 2
         rand = UnityEngine.Random.Range(1, 3);
+
+        tileMapsContainers = GameObject.FindGameObjectsWithTag("WaterType");
+        tileMaps = new Tilemap[tileMapsContainers.Length];
+
+        for (int i = 0; i < tileMapsContainers.Length; i++)
+        {
+            tileMaps[i] = tileMapsContainers[i].GetComponent<Tilemap>();
+        }
+    }
+
+    string GetWaterType()
+    {
+        for (int i = 0; i < tileMapsContainers.Length; i++)
+        {
+            GameObject tilemapContainer = tileMapsContainers[i];
+            Tilemap tilemap = tilemapContainer.GetComponent<Tilemap>();
+
+            Vector3Int cellPosition = tilemap.WorldToCell(player.position);
+
+            if (tilemap.HasTile(cellPosition)) 
+            {
+                return tilemapContainer.name;
+            }
+        }
+
+        return "null";
     }
 
     // Update is called once per frame
@@ -28,22 +61,28 @@ public class Fishing : MonoBehaviour
         //Starts when the user presses f
         if (Input.GetKeyDown("f"))
         {
-            
-            if (rand == 1)
+            string playerWaterType = GetWaterType();
+
+            if(playerWaterType == "null")
+            {
+                return;
+            }
+
+            if (playerWaterType == "FreshWater")
             {
                 //Goes down to the function below, changing the dictionary to FreshWater found in the FishLootTables script and sets the water type to fresh water
                 selectedItem = WeightedRandom(FishLootTables.FreshWater);
                 waterType = "FreshWater";
             }
-            else
+            else if (playerWaterType == "SaltWater")
             {
                 //Goes down to the function below, changing the dictionary to SaltWater found in the FishLootTables script and sets the water type to salt water
                 selectedItem = WeightedRandom(FishLootTables.SaltWater);
                 waterType = "SaltWater";
             }
 
-            //Prints out what type of water you fished in and what you got in the console
-            Debug.Log($"You fished in {waterType} and got a {selectedItem}");
+                //Prints out what type of water you fished in and what you got in the console
+                Debug.Log($"You fished in {waterType} and got a {selectedItem}");
             //Tries to create a new object in the inventory with the fish that got fished up 
             try
             {
