@@ -85,7 +85,7 @@ public class Fishing : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> pair in InventoryScript.Inventory)
         {
-            sellValue = pair.Value;
+            sellValue = pair.Value * FishData.SellValues[pair.Key];
         }
     }
 
