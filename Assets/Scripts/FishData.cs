@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FishLootTables : MonoBehaviour
+public class FishData : MonoBehaviour
 {
     //Creates a dictionary that holds pairs with a string/key and an int/value with the string being the name of the fish and the int being the chance of it being chosen
     static public Dictionary<string, int> FreshWater = new Dictionary<string, int>()
@@ -23,11 +23,19 @@ public class FishLootTables : MonoBehaviour
         ["Surgeon"] = 25,
     };
 
-   /* static public Dictionary<string, int> MuddPuddle = new Dictionary<string, int>()
+    static public Dictionary<string, int> SellValues = new Dictionary<string, int>()
     {
-        ["RustyCan"] = 95,
-        ["Worm"] = 5,
-    };*/
+        ["Anchovy"] = 5,
+        ["AngelFish"] = 12,
+        ["Bass"] = 5,
+        ["CatFish"] = 8,
+        ["Clownfish"] = 15,
+        ["Crab"] = 75,
+        ["GoldFish"] = 75,
+        ["Pufferfish"] = 30,
+        ["RainbowTrout"] = 150,
+        ["Surgeon"] = 10,
+    };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

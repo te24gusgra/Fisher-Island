@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class Fishing : MonoBehaviour
 {
     // Getting the dictionaries
-    public FishLootTables fishLootTables;
+    public FishData fishData;
     public InventoryScript inventoryscript;
 
     public Transform player;
@@ -19,14 +19,11 @@ public class Fishing : MonoBehaviour
 
     //Variables
     public string selectedItem;
-    public string waterType;
-    public int rand;
+    public int sellValue;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Chooses the number 1 or 2
-        rand = UnityEngine.Random.Range(1, 3);
 
         tileMapsContainers = GameObject.FindGameObjectsWithTag("WaterType");
         tileMaps = new Tilemap[tileMapsContainers.Length];
@@ -52,7 +49,44 @@ public class Fishing : MonoBehaviour
             }
         }
 
-        return "null";
+        return "NoWater";
+    }
+
+    void Fish(string waterType)
+    {
+
+        if (waterType == "FreshWater")
+        {
+            //Goes down to the WeightedRandom function below, changing the dictionary to FreshWater found in the FishData script and sets the water type to fresh water
+            selectedItem = WeightedRandom(FishData.FreshWater);
+        }
+        else if (waterType == "SaltWater")
+        {
+            //Goes down to the WeightedRandom function below, changing the dictionary to SaltWater found in the FishData script and sets the water type to salt water
+            selectedItem = WeightedRandom(FishData.SaltWater);
+        }
+
+        //Prints out what type of water you fished in and what you got in the console
+        Debug.Log($"You fished in {waterType} and got a {selectedItem}");
+
+        //Tries to create a new object in the inventory with the fish that got fished up 
+        try
+        {
+            InventoryScript.Inventory.Add(selectedItem, 0);
+        }
+        //If the object already exits it just skips
+        catch { }
+
+        //Adds the fish into the inventory
+        InventoryScript.Inventory[selectedItem]++;
+    }
+
+    void Sell()
+    {
+        foreach (KeyValuePair<string, int> pair in InventoryScript.Inventory)
+        {
+            sellValue = pair.Value;
+        }
     }
 
     // Update is called once per frame
@@ -61,37 +95,15 @@ public class Fishing : MonoBehaviour
         //Starts when the user presses f
         if (Input.GetKeyDown("f"))
         {
-            string playerWaterType = GetWaterType();
-
-            if(playerWaterType == "null")
+            string playerType = GetWaterType();
+            if (playerType != "NoWater")
             {
-                return;
+                Fish(playerType);
             }
-
-            if (playerWaterType == "FreshWater")
+            else
             {
-                //Goes down to the function below, changing the dictionary to FreshWater found in the FishLootTables script and sets the water type to fresh water
-                selectedItem = WeightedRandom(FishLootTables.FreshWater);
-                waterType = "FreshWater";
+                Sell();
             }
-            else if (playerWaterType == "SaltWater")
-            {
-                //Goes down to the function below, changing the dictionary to SaltWater found in the FishLootTables script and sets the water type to salt water
-                selectedItem = WeightedRandom(FishLootTables.SaltWater);
-                waterType = "SaltWater";
-            }
-
-                //Prints out what type of water you fished in and what you got in the console
-                Debug.Log($"You fished in {waterType} and got a {selectedItem}");
-            //Tries to create a new object in the inventory with the fish that got fished up 
-            try
-            {
-                InventoryScript.Inventory.Add(selectedItem, 0);
-            }
-            //If the object already exits it just skips
-            catch { }
-            //Adds the fish into the inventory
-            InventoryScript.Inventory[selectedItem]++;
         }
     }
     //Creates a function called WeightedRandom and gives it a dictionary

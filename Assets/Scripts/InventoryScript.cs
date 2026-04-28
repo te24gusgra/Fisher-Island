@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class InventoryScript : MonoBehaviour
 {
+    public int money = 0;
     //Creates a dictionary called Inventory
     static public Dictionary<string, int> Inventory = new Dictionary<string, int>()
     {
@@ -25,6 +26,7 @@ public class InventoryScript : MonoBehaviour
             {
                 Debug.Log($"You currently have {pair.Value} {pair.Key} in your inventory");
             }
+            Debug.Log($"You have {money}$ in your purse");
         } 
     }
 }
