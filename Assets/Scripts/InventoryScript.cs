@@ -4,9 +4,10 @@ using UnityEngine;
 public class InventoryScript : MonoBehaviour
 {
     static public int money = 0;
-    //static bool menuActivated;
+    static bool menuActivated;
+    public ItemSlot[] itemSlot;
 
-    //public GameObject InventoryMenu;
+    public GameObject InventoryMenu;
     //Creates a dictionary called Inventory
     static public Dictionary<string, int> Inventory = new Dictionary<string, int>()
     {
@@ -16,29 +17,44 @@ public class InventoryScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //When you press e it prints out what you have in your inventory
-        if (Input.GetKeyDown("e"))
-        {
+        //    When you press e it prints out what you have in your inventory
+        //if (Input.GetKeyDown("e"))
+        //{
 
-            foreach (KeyValuePair<string, int> pair in Inventory) 
+        //    foreach (KeyValuePair<string, int> pair in Inventory)
+        //    {
+        //        Debug.Log($"You currently have {pair.Value} {pair.Key} in your inventory");
+        //    }
+        //    Debug.Log($"You have {money}$ in your purse");
+        //}
+
+        if (Input.GetKeyDown("e") && menuActivated)
+        {
+            InventoryMenu.SetActive(false);
+            menuActivated = false;
+        }
+        else if (Input.GetKeyDown("e") && !menuActivated)
+        {
+            InventoryMenu.SetActive(true);
+            menuActivated = true;
+        }
+    }
+
+    public void AddItem(string itemName, int quantity, Sprite itemSprite)
+    {
+        for (int i = 0; i < itemSlot.Length; i++)
+        {
+            if (itemSlot[i].isFull == false)
             {
-                Debug.Log($"You currently have {pair.Value} {pair.Key} in your inventory");
+                itemSlot[i].AddItem(itemName, quantity, itemSprite);
+                return;
             }
-            Debug.Log($"You have {money}$ in your purse");
-        } 
-        //if (Input.GetKeyDown("e") && menuActivated)
-        //{
-        //    InventoryMenu.SetActive(false);
-        //}
-        //else if (Input.GetKeyDown("e") && !menuActivated)
-        //{
-        //    InventoryMenu.SetActive(true);
-        //}
+        }
     }
 }

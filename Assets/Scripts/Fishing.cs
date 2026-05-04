@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.U2D;
 
 public class Fishing : MonoBehaviour
 {
     // Getting the dictionaries
     public FishData fishData;
-    public InventoryScript inventoryscript;
+    public InventoryScript inventoryScript;
 
     public Transform player;
 
@@ -24,7 +25,7 @@ public class Fishing : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     string GetWaterType()
@@ -137,7 +138,7 @@ public class Fishing : MonoBehaviour
             }
             else
             {
-                Debug.Log("Du är ju inte ens nära något");
+                Debug.Log("Fel");
             }
         }
     }
