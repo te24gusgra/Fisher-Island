@@ -24,7 +24,11 @@ public class Fishing : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+    }
 
+    string GetWaterType()
+    {
         tileMapsContainers = GameObject.FindGameObjectsWithTag("WaterType");
         tileMaps = new Tilemap[tileMapsContainers.Length];
 
@@ -32,10 +36,7 @@ public class Fishing : MonoBehaviour
         {
             tileMaps[i] = tileMapsContainers[i].GetComponent<Tilemap>();
         }
-    }
 
-    string GetWaterType()
-    {
         for (int i = 0; i < tileMapsContainers.Length; i++)
         {
             GameObject tilemapContainer = tileMapsContainers[i];
@@ -50,6 +51,32 @@ public class Fishing : MonoBehaviour
         }
 
         return "NoWater";
+    }
+
+    string GetShopArea()
+    {
+        tileMapsContainers = GameObject.FindGameObjectsWithTag("ShopArea");
+        tileMaps = new Tilemap[tileMapsContainers.Length];
+
+        for (int i = 0; i < tileMapsContainers.Length; i++)
+        {
+            tileMaps[i] = tileMapsContainers[i].GetComponent<Tilemap>();
+        }
+
+        for (int i = 0; i < tileMapsContainers.Length; i++)
+        {
+            GameObject tilemapContainer = tileMapsContainers[i];
+            Tilemap tilemap = tilemapContainer.GetComponent<Tilemap>();
+
+            Vector3Int cellPosition = tilemap.WorldToCell(player.position);
+
+            if (tilemap.HasTile(cellPosition))
+            {
+                return tilemapContainer.name;
+            }
+        }
+
+        return "NoShopArea";
     }
 
     void Fish(string waterType)
@@ -83,10 +110,13 @@ public class Fishing : MonoBehaviour
 
     void Sell()
     {
+        Debug.Log("You sold all your fish");
         foreach (KeyValuePair<string, int> pair in InventoryScript.Inventory)
         {
             sellValue = pair.Value * FishData.SellValues[pair.Key];
+            InventoryScript.money += sellValue;
         }
+        InventoryScript.Inventory.Clear();
     }
 
     // Update is called once per frame
@@ -95,14 +125,19 @@ public class Fishing : MonoBehaviour
         //Starts when the user presses f
         if (Input.GetKeyDown("f"))
         {
-            string playerType = GetWaterType();
-            if (playerType != "NoWater")
+            string playerWaterType = GetWaterType();
+            string playerShopArea = GetShopArea();
+            if (playerWaterType != "NoWater")
             {
-                Fish(playerType);
+                Fish(playerWaterType);
+            }
+            else if (playerShopArea != "NoShopArea")
+            {
+                Sell();
             }
             else
             {
-                Sell();
+                Debug.Log("Du är ju inte ens nära något");
             }
         }
     }
