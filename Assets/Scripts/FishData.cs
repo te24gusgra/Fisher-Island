@@ -3,6 +3,36 @@ using UnityEngine;
 
 public class FishData : MonoBehaviour
 {
+    [SerializeField]
+    public Sprite anchovy;
+
+    [SerializeField]
+    public Sprite angelFish;
+
+    [SerializeField]
+    public Sprite bass;
+
+    [SerializeField]
+    public Sprite catFish;
+
+    [SerializeField]
+    public Sprite clownFish;
+
+    [SerializeField]
+    public Sprite crab;
+
+    [SerializeField]
+    public Sprite goldFish;
+
+    [SerializeField]
+    public Sprite pufferFish;
+
+    [SerializeField]
+    public Sprite rainbowTrout;
+
+    [SerializeField]
+    public Sprite surgeon;
+
     //Creates a dictionary that holds pairs with a string/key and an int/value with the string being the name of the fish and the int being the chance of it being chosen
     static public Dictionary<string, int> FreshWater = new Dictionary<string, int>()
     {
@@ -37,9 +67,24 @@ public class FishData : MonoBehaviour
         ["Surgeon"] = 10,
     };
 
+    static public Dictionary<string, Sprite> FishSprites;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    { 
+        FishSprites = new Dictionary<string, Sprite>()
+        {
+            ["Anchovy"] = anchovy,
+            ["AngelFish"] = angelFish,
+            ["Bass"] = bass,
+            ["CatFish"] = catFish,
+            ["Clownfish"] = clownFish,
+            ["Crab"] = crab,
+            ["GoldFish"] = goldFish,
+            ["Pufferfish"] = pufferFish,
+            ["RainbowTrout"] = rainbowTrout,
+            ["Surgeon"] = surgeon,
+        };
     }
 
     // Update is called once per frame

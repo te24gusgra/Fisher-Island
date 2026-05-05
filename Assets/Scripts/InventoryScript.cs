@@ -1,13 +1,15 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class InventoryScript : MonoBehaviour
 {
-    static public int money = 0;
     static bool menuActivated;
     public ItemSlot[] itemSlot;
 
     public GameObject InventoryMenu;
+    public GameObject InventorySlotsContainer;
+    public GameObject IventorySlotPrefab;
     //Creates a dictionary called Inventory
     static public Dictionary<string, int> Inventory = new Dictionary<string, int>()
     {
@@ -23,38 +25,33 @@ public class InventoryScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //    When you press e it prints out what you have in your inventory
-        //if (Input.GetKeyDown("e"))
-        //{
-
-        //    foreach (KeyValuePair<string, int> pair in Inventory)
-        //    {
-        //        Debug.Log($"You currently have {pair.Value} {pair.Key} in your inventory");
-        //    }
-        //    Debug.Log($"You have {money}$ in your purse");
-        //}
-
         if (Input.GetKeyDown("e") && menuActivated)
         {
+            // Disable inventory
+
+            // Clear All itemslots in inventory
+            for (var i = InventorySlotsContainer.transform.childCount - 1; i >= 0; i--)
+            {
+                Destroy(InventorySlotsContainer.transform.GetChild(i).gameObject);
+            }
+
             InventoryMenu.SetActive(false);
             menuActivated = false;
         }
         else if (Input.GetKeyDown("e") && !menuActivated)
         {
+            // Enable inventory
+
+            // Creates copys of an inventory prefab and adds the fish and the quantity
+            foreach (KeyValuePair<string, int> pair in Inventory)
+            {
+                var itemSlot = Instantiate(IventorySlotPrefab, InventorySlotsContainer.transform);
+                ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
+                itemSlotComponent.AddItem(pair.Key, pair.Value, FishData.FishSprites[pair.Key]);
+            }
+
             InventoryMenu.SetActive(true);
             menuActivated = true;
-        }
-    }
-
-    public void AddItem(string itemName, int quantity, Sprite itemSprite)
-    {
-        for (int i = 0; i < itemSlot.Length; i++)
-        {
-            if (itemSlot[i].isFull == false)
-            {
-                itemSlot[i].AddItem(itemName, quantity, itemSprite);
-                return;
-            }
         }
     }
 }
