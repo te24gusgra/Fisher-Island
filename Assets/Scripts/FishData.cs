@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FishData : MonoBehaviour
@@ -6,32 +7,72 @@ public class FishData : MonoBehaviour
     [SerializeField]
     public Sprite anchovy;
 
+    [TextArea]
+    [SerializeField]
+    private string anchovyDescription;
+
     [SerializeField]
     public Sprite angelFish;
+
+    [TextArea]
+    [SerializeField]
+    private string angelFishDescription;
 
     [SerializeField]
     public Sprite bass;
 
+    [TextArea]
+    [SerializeField]
+    private string bassDescription;
+
     [SerializeField]
     public Sprite catFish;
+
+    [TextArea]
+    [SerializeField]
+    private string catFishDescription;
 
     [SerializeField]
     public Sprite clownFish;
 
+    [TextArea]
+    [SerializeField]
+    private string clownFishDescription;
+
     [SerializeField]
     public Sprite crab;
+
+    [TextArea]
+    [SerializeField]
+    private string crabDescription;
 
     [SerializeField]
     public Sprite goldFish;
 
+    [TextArea]
+    [SerializeField]
+    private string goldFishDescription;
+
     [SerializeField]
     public Sprite pufferFish;
+
+    [TextArea]
+    [SerializeField]
+    private string pufferFishDescription;
 
     [SerializeField]
     public Sprite rainbowTrout;
 
+    [TextArea]
+    [SerializeField]
+    private string rainbowTroutDescription;
+
     [SerializeField]
     public Sprite surgeon;
+
+    [TextArea]
+    [SerializeField]
+    private string surgeonDescription;
 
     //Creates a dictionary that holds pairs with a string/key and an int/value with the string being the name of the fish and the int being the chance of it being chosen
     static public Dictionary<string, int> FreshWater = new Dictionary<string, int>()
@@ -68,10 +109,11 @@ public class FishData : MonoBehaviour
     };
 
     static public Dictionary<string, Sprite> FishSprites;
+    static public Dictionary <string, string> FishDescriptions;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    { 
+    {
         FishSprites = new Dictionary<string, Sprite>()
         {
             ["Anchovy"] = anchovy,
@@ -84,6 +126,20 @@ public class FishData : MonoBehaviour
             ["Pufferfish"] = pufferFish,
             ["RainbowTrout"] = rainbowTrout,
             ["Surgeon"] = surgeon,
+        };
+
+        FishDescriptions = new Dictionary<string, string>()
+        {
+            ["Anchovy"] = anchovyDescription,
+            ["AngelFish"] = angelFishDescription,
+            ["Bass"] = bassDescription,
+            ["CatFish"] = catFishDescription,
+            ["Clownfish"] = clownFishDescription,
+            ["Crab"] = crabDescription,
+            ["GoldFish"] = goldFishDescription,
+            ["Pufferfish"] = pufferFishDescription,
+            ["RainbowTrout"] = rainbowTroutDescription,
+            ["Surgeon"] = surgeonDescription,
         };
     }
 

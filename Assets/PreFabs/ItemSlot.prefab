@@ -241,11 +241,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b935ffd436463419a6ea8fbd8f9221, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  itemName: 
+  fishName: 
   quantity: 0
-  itemSprite: {fileID: 0}
+  fishSprite: {fileID: 0}
+  fishDescription: 
   quantityText: {fileID: 2337189548101305344}
-  itemImage: {fileID: 1588537848331317476}
+  fishImage: {fileID: 1588537848331317476}
+  fishDescriptionImage: {fileID: 0}
+  fishDescriptionNameText: {fileID: 0}
+  fishDescriptionText: {fileID: 0}
   selectedShader: {fileID: 2382972344203628001}
   thisItemSelected: 0
 --- !u!1 &5766336942559228910

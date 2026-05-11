@@ -2,19 +2,28 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
     //Variables
-    public string itemName;
+    public string fishName;
     public int quantity;
-    public Sprite itemSprite;
+    public Sprite fishSprite;
+    public string fishDescription;
 
+    //Item slot stuff
     [SerializeField]
     private TMP_Text quantityText;
 
     [SerializeField]
-    private Image itemImage;
+    private Image fishImage;
+
+    //Item description
+    public Image fishDescriptionImage;
+    public TMP_Text fishDescriptionNameText;
+    public TMP_Text fishDescriptionText;
+
 
     public GameObject selectedShader;
     public bool thisItemSelected;
@@ -24,17 +33,21 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public void Start()
     {
         inventoryScript = GameObject.Find("InventoryCanvas").GetComponent<InventoryScript>();
+        fishDescriptionNameText = GameObject.Find("FishDescriptionNameText").GetComponentInChildren<TMP_Text>();
+        fishDescriptionText = GameObject.Find("FishDescriptionText").GetComponentInChildren<TMP_Text>();
+        fishDescriptionImage = GameObject.Find("DescriptionFishImage").GetComponentInChildren<Image>();
     }
 
-    public void AddItem(string itemName, int quantity, Sprite itemSprite)
+    public void AddItem(string fishName, int quantity, Sprite fishSprite, string fishDescription)
     {
-        this.itemName = itemName;
+        this.fishName = fishName;
         this.quantity = quantity;
-        this.itemSprite = itemSprite;
+        this.fishSprite = fishSprite;
+        this.fishDescription = fishDescription;
 
         quantityText.enabled = true;
         quantityText.text = quantity.ToString();
-        itemImage.sprite = itemSprite;
+        fishImage.sprite = fishSprite;
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -54,6 +67,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         inventoryScript.DeselectAllSlots();
         selectedShader.SetActive(true);
         thisItemSelected = true;
+        fishDescriptionNameText.text = fishName;
+        fishDescriptionText.text = fishDescription;
+        fishDescriptionImage.sprite = fishSprite;
     }
 
     public void OnRightClick() 

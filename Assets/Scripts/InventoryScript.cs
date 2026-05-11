@@ -34,7 +34,9 @@ public class InventoryScript : MonoBehaviour
             for (var i = InventorySlotsContainer.transform.childCount - 1; i >= 0; i--)
             {
                 Destroy(InventorySlotsContainer.transform.GetChild(i).gameObject);
+                Destroy(itemSlotArray[0]);
             }
+            
 
             InventoryMenu.SetActive(false);
             menuActivated = false;
@@ -42,22 +44,19 @@ public class InventoryScript : MonoBehaviour
         else if (Input.GetKeyDown("e") && !menuActivated)
         {
             // Enable inventory
-            
+
             itemSlotArray = new ItemSlot[10];
             int i = 0;
-            // skapar om itemSlotArray
-            // itemSLotArray new Array[10]
-            // int i = 0;
 
             // Creates copys of an inventory prefab and adds the fish and the quantity
             foreach (KeyValuePair<string, int> pair in Inventory)
             {
                 var itemSlot = Instantiate(IventorySlotPrefab, InventorySlotsContainer.transform);
                 ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
-                itemSlotComponent.AddItem(pair.Key, pair.Value, FishData.FishSprites[pair.Key]);
+                itemSlotComponent.AddItem(pair.Key, pair.Value, FishData.FishSprites[pair.Key], FishData.FishDescriptions[pair.Key]);
 
                 itemSlotArray[i] = itemSlotComponent;
-                // array[i] = itemslot
+                i++;
             }
 
             InventoryMenu.SetActive(true);
@@ -69,8 +68,11 @@ public class InventoryScript : MonoBehaviour
     {
         for (int i = 0; i < itemSlotArray.Length; i++)
         {
-            itemSlotArray[i].selectedShader.SetActive(false);
-            itemSlotArray[i].thisItemSelected = false;
+            if (itemSlotArray[i] != null)
+            {
+                itemSlotArray[i].selectedShader.SetActive(false);
+                itemSlotArray[i].thisItemSelected = false;
+            }
         }
     }
 }
