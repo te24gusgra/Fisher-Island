@@ -244,9 +244,10 @@ MonoBehaviour:
   itemName: 
   quantity: 0
   itemSprite: {fileID: 0}
-  isFull: 0
   quantityText: {fileID: 2337189548101305344}
   itemImage: {fileID: 1588537848331317476}
+  selectedShader: {fileID: 2382972344203628001}
+  thisItemSelected: 0
 --- !u!1 &5766336942559228910
 GameObject:
   m_ObjectHideFlags: 0

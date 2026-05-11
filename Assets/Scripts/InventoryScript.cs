@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class InventoryScript : MonoBehaviour
 {
     static bool menuActivated;
-    public ItemSlot[] itemSlot;
+    public ItemSlot[] itemSlotArray;
 
     public GameObject InventoryMenu;
     public GameObject InventorySlotsContainer;
@@ -41,6 +42,12 @@ public class InventoryScript : MonoBehaviour
         else if (Input.GetKeyDown("e") && !menuActivated)
         {
             // Enable inventory
+            
+            itemSlotArray = new ItemSlot[10];
+            int i = 0;
+            // skapar om itemSlotArray
+            // itemSLotArray new Array[10]
+            // int i = 0;
 
             // Creates copys of an inventory prefab and adds the fish and the quantity
             foreach (KeyValuePair<string, int> pair in Inventory)
@@ -48,10 +55,22 @@ public class InventoryScript : MonoBehaviour
                 var itemSlot = Instantiate(IventorySlotPrefab, InventorySlotsContainer.transform);
                 ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
                 itemSlotComponent.AddItem(pair.Key, pair.Value, FishData.FishSprites[pair.Key]);
+
+                itemSlotArray[i] = itemSlotComponent;
+                // array[i] = itemslot
             }
 
             InventoryMenu.SetActive(true);
             menuActivated = true;
+        }
+    }
+
+    public void DeselectAllSlots()
+    {
+        for (int i = 0; i < itemSlotArray.Length; i++)
+        {
+            itemSlotArray[i].selectedShader.SetActive(false);
+            itemSlotArray[i].thisItemSelected = false;
         }
     }
 }
