@@ -11,6 +11,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public int quantity;
     public Sprite fishSprite;
     public string fishDescription;
+    public int fishValue;
 
     //Item slot stuff
     [SerializeField]
@@ -21,6 +22,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     //Item description
     public Image fishDescriptionImage;
+    public TMP_Text fishValueText;
     public TMP_Text fishDescriptionNameText;
     public TMP_Text fishDescriptionText;
 
@@ -36,14 +38,16 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         fishDescriptionNameText = GameObject.Find("FishDescriptionNameText").GetComponentInChildren<TMP_Text>();
         fishDescriptionText = GameObject.Find("FishDescriptionText").GetComponentInChildren<TMP_Text>();
         fishDescriptionImage = GameObject.Find("DescriptionFishImage").GetComponentInChildren<Image>();
+        fishValueText = GameObject.Find("FishValueText").GetComponentInChildren<TMP_Text>();
     }
 
-    public void AddItem(string fishName, int quantity, Sprite fishSprite, string fishDescription)
+    public void AddItem(string fishName, int quantity, Sprite fishSprite, string fishDescription, int fishValue)
     {
         this.fishName = fishName;
         this.quantity = quantity;
         this.fishSprite = fishSprite;
         this.fishDescription = fishDescription;
+        this.fishValue = fishValue;
 
         quantityText.enabled = true;
         quantityText.text = quantity.ToString();
@@ -52,14 +56,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            OnLeftClick();
-        }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnRightClick();
-        }
+        OnLeftClick();
     }
 
     public void OnLeftClick()
@@ -70,10 +67,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         fishDescriptionNameText.text = fishName;
         fishDescriptionText.text = fishDescription;
         fishDescriptionImage.sprite = fishSprite;
-    }
-
-    public void OnRightClick() 
-    {
-        
+        fishDescriptionImage.enabled = true;
+        fishValueText.text = $"${fishValue.ToString()}";
     }
 }

@@ -5,10 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.U2D;
+using TMPro;
+using System.Threading;
+using UnityEditor.AssetImporters;
+using Unity.Jobs.LowLevel.Unsafe;
 
 public class Fishing : MonoBehaviour
 {
-    // Getting the dictionaries
+    // Getting the dictionary
     public InventoryScript inventoryScript;
 
     public Transform player;
@@ -19,6 +23,11 @@ public class Fishing : MonoBehaviour
 
     //Variables
     public string selectedItem;
+    public float nextFish = 0;
+    public float cooldown = 1.5f;
+
+    [SerializeField]
+    public TMP_Text actionText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -92,9 +101,6 @@ public class Fishing : MonoBehaviour
             selectedItem = WeightedRandom(FishData.SaltWater);
         }
 
-        // Prints out what type of water you fished in and what you got in the console
-        Debug.Log($"You fished in {waterType} and got a {selectedItem}");
-
         // Tries to create a new object in the inventory with the fish that got fished up 
         try
         {
@@ -107,6 +113,7 @@ public class Fishing : MonoBehaviour
         // Adds the fish into the inventory
         InventoryScript.Inventory[selectedItem]++;
 
+        actionText.text = $"You just caught a {selectedItem}";
         // var fishSprite = FishData.FishSprites[selectedItem];
         // inventoryScript.AddItem(selectedItem, 1, fishSprite);
     }
@@ -119,17 +126,22 @@ public class Fishing : MonoBehaviour
         {
             string playerWaterType = GetWaterType();
             string playerShopArea = GetShopArea();
-            if (playerWaterType != "NoWater")
+            if (playerWaterType != "NoWater" && Time.time > nextFish)
             {
+                nextFish = Time.time + cooldown;
                 Fish(playerWaterType);
             }
             else if (playerShopArea != "NoShopArea")
             {
-                MoneyData.Sell();
+                int sellValue = MoneyData.Sell();
+                if (sellValue > 0)
+                {
+                    actionText.text = $"You just sold all your fish and got ${sellValue}";
+                }
             }
             else
             {
-                Debug.Log("Fel");
+                Debug.Log("Det är ju en cooldown eller är du på fel plats");
             }
         }
     }

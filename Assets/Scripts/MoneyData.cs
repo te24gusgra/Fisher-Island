@@ -5,19 +5,22 @@ using UnityEngine;
 public class MoneyData : MonoBehaviour
 {
     static public int money = 0;
-    static public int sellValue;
 
     [SerializeField]
     private TMP_Text totalMoney;
 
-    static public void Sell()
+    static public int Sell()
     {
+        int sellValue = 0;
+
         foreach (KeyValuePair<string, int> pair in InventoryScript.Inventory)
         {
-            sellValue = pair.Value * FishData.SellValues[pair.Key];
-            money += sellValue;
+            sellValue += pair.Value * FishData.SellValues[pair.Key];
         }
         InventoryScript.Inventory.Clear();
+        money += sellValue;
+
+        return sellValue;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

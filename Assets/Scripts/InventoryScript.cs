@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class InventoryScript : MonoBehaviour
@@ -40,6 +41,7 @@ public class InventoryScript : MonoBehaviour
 
             InventoryMenu.SetActive(false);
             menuActivated = false;
+            DeselectDescription();
         }
         else if (Input.GetKeyDown("e") && !menuActivated)
         {
@@ -53,7 +55,7 @@ public class InventoryScript : MonoBehaviour
             {
                 var itemSlot = Instantiate(IventorySlotPrefab, InventorySlotsContainer.transform);
                 ItemSlot itemSlotComponent = itemSlot.GetComponent<ItemSlot>();
-                itemSlotComponent.AddItem(pair.Key, pair.Value, FishData.FishSprites[pair.Key], FishData.FishDescriptions[pair.Key]);
+                itemSlotComponent.AddItem(pair.Key, pair.Value, FishData.FishSprites[pair.Key], FishData.FishDescriptions[pair.Key], FishData.SellValues[pair.Key]);
 
                 itemSlotArray[i] = itemSlotComponent;
                 i++;
@@ -72,6 +74,20 @@ public class InventoryScript : MonoBehaviour
             {
                 itemSlotArray[i].selectedShader.SetActive(false);
                 itemSlotArray[i].thisItemSelected = false;
+            }
+        }
+    }
+
+    public void DeselectDescription()
+    {
+        for (int i = 0; i < itemSlotArray.Length; i++)
+        {
+            if (itemSlotArray[i] != null)
+            {
+                itemSlotArray[i].fishDescriptionImage.enabled = false;
+                itemSlotArray[i].fishDescriptionNameText.text = null;
+                itemSlotArray[i].fishDescriptionText.text = null;
+                itemSlotArray[i].fishValueText.text = null;
             }
         }
     }
