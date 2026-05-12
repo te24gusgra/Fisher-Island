@@ -12,6 +12,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public Sprite fishSprite;
     public string fishDescription;
     public int fishValue;
+    private InventoryScript inventoryScript;
 
     //Item slot stuff
     [SerializeField]
@@ -26,14 +27,13 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public TMP_Text fishDescriptionNameText;
     public TMP_Text fishDescriptionText;
 
-
+    // Selected item stuff
     public GameObject selectedShader;
     public bool thisItemSelected;
 
-    private InventoryScript inventoryScript;
-
     public void Start()
     {
+        // Getting all the different items that are otherwise out of reach
         inventoryScript = GameObject.Find("InventoryCanvas").GetComponent<InventoryScript>();
         fishDescriptionNameText = GameObject.Find("FishDescriptionNameText").GetComponentInChildren<TMP_Text>();
         fishDescriptionText = GameObject.Find("FishDescriptionText").GetComponentInChildren<TMP_Text>();
@@ -41,6 +41,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         fishValueText = GameObject.Find("FishValueText").GetComponentInChildren<TMP_Text>();
     }
 
+    // Gets the information of the fish and puts it into the item slot
     public void AddItem(string fishName, int quantity, Sprite fishSprite, string fishDescription, int fishValue)
     {
         this.fishName = fishName;
@@ -54,11 +55,13 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
         fishImage.sprite = fishSprite;
     }
 
+    // Detects if you click on the itemslot
     public void OnPointerClick(PointerEventData eventData)
     {
         OnLeftClick();
     }
 
+    // Selects the fish and shows the fishs name, description, sell value and sprite 
     public void OnLeftClick()
     {
         inventoryScript.DeselectAllSlots();

@@ -17226,7 +17226,8 @@ MonoBehaviour:
   inventoryScript: {fileID: 0}
   player: {fileID: 1837429351}
   selectedItem: 
-  cooldownActive: 0
+  nextFish: 0
+  cooldown: 1.5
   actionText: {fileID: 2090580730}
 --- !u!4 &694368562
 Transform:
@@ -20293,7 +20294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You Caught A Tomtefar
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

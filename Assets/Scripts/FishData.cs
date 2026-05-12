@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FishData : MonoBehaviour
 {
+    // Contains the differents fishes sprites and descriptions
+
     [SerializeField]
     public Sprite anchovy;
 
@@ -74,7 +76,7 @@ public class FishData : MonoBehaviour
     [SerializeField]
     private string surgeonDescription;
 
-    //Creates a dictionary that holds pairs with a string/key and an int/value with the string being the name of the fish and the int being the chance of it being chosen
+    // Creates a dictionary that holds pairs with a string/key and an int/value with the string being the name of the fish and the int being the chance of it being chosen
     static public Dictionary<string, int> FreshWater = new Dictionary<string, int>()
     {
         ["AngelFish"] = 24,
@@ -84,7 +86,7 @@ public class FishData : MonoBehaviour
         ["RainbowTrout"] = 1,
     };
 
-    //Same as above but with other fish and chances
+    // Same as above but with other fish and chances
     static public Dictionary<string, int> SaltWater = new Dictionary<string, int>()
     {
         ["Anchovy"] = 40,
@@ -94,6 +96,7 @@ public class FishData : MonoBehaviour
         ["Surgeon"] = 25,
     };
 
+    // Same as above but with all the fish combined and with the fishs sell value
     static public Dictionary<string, int> SellValues = new Dictionary<string, int>()
     {
         ["Anchovy"] = 5,
@@ -108,12 +111,14 @@ public class FishData : MonoBehaviour
         ["Surgeon"] = 10,
     };
 
+    // Creates dictionaries
     static public Dictionary<string, Sprite> FishSprites;
     static public Dictionary <string, string> FishDescriptions;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Stores each fish sprite
         FishSprites = new Dictionary<string, Sprite>()
         {
             ["Anchovy"] = anchovy,
@@ -128,6 +133,7 @@ public class FishData : MonoBehaviour
             ["Surgeon"] = surgeon,
         };
 
+        // Stores each fish description
         FishDescriptions = new Dictionary<string, string>()
         {
             ["Anchovy"] = anchovyDescription,

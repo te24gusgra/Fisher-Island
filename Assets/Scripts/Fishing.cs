@@ -12,89 +12,122 @@ using Unity.Jobs.LowLevel.Unsafe;
 
 public class Fishing : MonoBehaviour
 {
-    // Getting the dictionary
+    // Getting outside information
     public InventoryScript inventoryScript;
 
     public Transform player;
 
+    [SerializeField]
+    public TMP_Text actionText;
+
+    // Creating arrays
     GameObject[] tileMapsContainers;
     Tilemap[] tileMaps;
 
 
-    //Variables
+    // Variables
     public string selectedItem;
-    public float nextFish = 0;
+    public float nextEvent = 0;
     public float cooldown = 1.5f;
-
-    [SerializeField]
-    public TMP_Text actionText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Getting the script
         inventoryScript = GameObject.Find("InventoryCanvas").GetComponent<InventoryScript>();
     }
 
+    // Figuring out if the player is on a tile next to water
     string GetWaterType()
     {
+        // Getting the gameobjects with the tag WaterType
         tileMapsContainers = GameObject.FindGameObjectsWithTag("WaterType");
+
+        // Recreates the array with the same length as there are with the tag WaterType
         tileMaps = new Tilemap[tileMapsContainers.Length];
 
+        // Loops through as many times as the array has items in it
         for (int i = 0; i < tileMapsContainers.Length; i++)
         {
+            // Puts the tilemaps into the array
             tileMaps[i] = tileMapsContainers[i].GetComponent<Tilemap>();
         }
 
+        // Loops through as many times as the array has items in it
         for (int i = 0; i < tileMapsContainers.Length; i++)
         {
+            // adds the gameobject into a variable
             GameObject tilemapContainer = tileMapsContainers[i];
+
+            // adds the tilemap into a variable
             Tilemap tilemap = tilemapContainer.GetComponent<Tilemap>();
 
+            // Gets what tilemap the player is on
             Vector3Int cellPosition = tilemap.WorldToCell(player.position);
 
+            // Checks if the player is on a tile map by the water
             if (tilemap.HasTile(cellPosition)) 
             {
+                // returns the name of the gameobject
                 return tilemapContainer.name;
             }
         }
 
+        // if the player is not a tilemap by the water it returns NoWater
         return "NoWater";
     }
 
+    //  Figuring out if the player is on a tile next to the shop
     string GetShopArea()
     {
+        // Getting the gameobjects with the tag ShopArea
         tileMapsContainers = GameObject.FindGameObjectsWithTag("ShopArea");
+
+        // Recreates the array with the same length as there are with the tag ShopArea
         tileMaps = new Tilemap[tileMapsContainers.Length];
 
+        // Loops through as many times as the array has items in it
         for (int i = 0; i < tileMapsContainers.Length; i++)
         {
+            // Puts the tilemaps into the array
             tileMaps[i] = tileMapsContainers[i].GetComponent<Tilemap>();
         }
 
+        // Loops through as many times as the array has items in it
         for (int i = 0; i < tileMapsContainers.Length; i++)
         {
+            // adds the gameobjects into a variable
             GameObject tilemapContainer = tileMapsContainers[i];
+
+            // adds the tilemap into a variable
             Tilemap tilemap = tilemapContainer.GetComponent<Tilemap>();
 
+            // Gets what tilemap the player is on
             Vector3Int cellPosition = tilemap.WorldToCell(player.position);
 
+            // Checks if the player is on the tile map by the shop
             if (tilemap.HasTile(cellPosition))
             {
+                // returns the name of the gameobject
                 return tilemapContainer.name;
             }
         }
 
+        // if the player is not the tilemap by the shop it returns NoShopArea
         return "NoShopArea";
     }
 
+    // Gets a random fish depending on what water you stand by
     void Fish(string waterType)
     {
 
+        // If you stand next to fresh water
         if (waterType == "FreshWater")
         {
             // Goes down to the WeightedRandom function below, changing the dictionary to FreshWater found in the FishData script and sets the water type to fresh water
             selectedItem = WeightedRandom(FishData.FreshWater);
         }
+        // If you stand next to salt water
         else if (waterType == "SaltWater")
         {
             // Goes down to the WeightedRandom function below, changing the dictionary to SaltWater found in the FishData script and sets the water type to salt water
@@ -107,15 +140,15 @@ public class Fishing : MonoBehaviour
             InventoryScript.Inventory.Add(selectedItem, 0);
             
         }
-        // If the object already exits it just skips
+        // If the fish already exits in the inventory it just skips
         catch { }
 
         // Adds the fish into the inventory
         InventoryScript.Inventory[selectedItem]++;
 
+        // Shows what fish you just caught
         actionText.text = $"You just caught a {selectedItem}";
-        // var fishSprite = FishData.FishSprites[selectedItem];
-        // inventoryScript.AddItem(selectedItem, 1, fishSprite);
+
     }
 
     // Update is called once per frame
@@ -124,28 +157,44 @@ public class Fishing : MonoBehaviour
         // Starts when the user presses f
         if (Input.GetKeyDown("f"))
         {
+            // Gets if the tile map you are standing on is a water type or not
             string playerWaterType = GetWaterType();
+
+            // Gets if the tile map you are standing on by the shop or not
             string playerShopArea = GetShopArea();
-            if (playerWaterType != "NoWater" && Time.time > nextFish)
+
+            // Checks if the player is near any water or if there is an active cooldown
+            if (playerWaterType != "NoWater" && Time.time > nextEvent)
             {
-                nextFish = Time.time + cooldown;
+                // Gets the random fish
                 Fish(playerWaterType);
+
+                // Adds a cooldown
+                nextEvent = Time.time + cooldown;
             }
+
+            // Checks if the player is near the shop
             else if (playerShopArea != "NoShopArea")
             {
+                // Gets the total money you sold your fish for
                 int sellValue = MoneyData.Sell();
+
+                // Checks if you acually sold any fish or not
                 if (sellValue > 0)
                 {
+                    // Announces that you sold your fish
                     actionText.text = $"You just sold all your fish and got ${sellValue}";
                 }
             }
+
+            // If you are not by the water or shop it just does this
             else
             {
-                Debug.Log("Det är ju en cooldown eller är du på fel plats");
+                actionText.text = "Cooldown";
             }
         }
     }
-    // Creates a function called WeightedRandom and gives it a dictionary
+    // Creates a function called WeightedRandom while getting information on what dictionary to use
     public static string WeightedRandom(Dictionary<string, int> WeightedDictionary)
     {
         // Creates an int with the starting value 0
