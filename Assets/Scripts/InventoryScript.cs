@@ -49,7 +49,7 @@ public class InventoryScript : MonoBehaviour
             // Removes the fishs description
             DeselectDescription();
         }
-        else if (Input.GetKeyDown("e") && !menuActivated)
+        else if (Input.GetKeyDown("e") && !menuActivated && ShopScript.playerShopArea != "ShopArea")
         {
             // Recreates the array with the length of 10
             itemSlotArray = new ItemSlot[10];

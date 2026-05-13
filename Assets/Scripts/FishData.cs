@@ -79,11 +79,11 @@ public class FishData : MonoBehaviour
     // Creates a dictionary that holds pairs with a string/key and an int/value with the string being the name of the fish and the int being the chance of it being chosen
     static public Dictionary<string, int> FreshWater = new Dictionary<string, int>()
     {
-        ["AngelFish"] = 24,
+        ["Angelfish"] = 24,
         ["Bass"] = 40,
-        ["CatFish"] = 30,
-        ["GoldFish"] = 5,
-        ["RainbowTrout"] = 1,
+        ["Catfish"] = 30,
+        ["Goldfish"] = 5,
+        ["Rainbowtrout"] = 1,
     };
 
     // Same as above but with other fish and chances
@@ -100,14 +100,14 @@ public class FishData : MonoBehaviour
     static public Dictionary<string, int> SellValues = new Dictionary<string, int>()
     {
         ["Anchovy"] = 5,
-        ["AngelFish"] = 12,
+        ["Angelfish"] = 12,
         ["Bass"] = 5,
-        ["CatFish"] = 8,
+        ["Catfish"] = 8,
         ["Clownfish"] = 15,
         ["Crab"] = 75,
-        ["GoldFish"] = 75,
+        ["Goldfish"] = 75,
         ["Pufferfish"] = 30,
-        ["RainbowTrout"] = 150,
+        ["Rainbowtrout"] = 150,
         ["Surgeon"] = 10,
     };
 
@@ -122,14 +122,14 @@ public class FishData : MonoBehaviour
         FishSprites = new Dictionary<string, Sprite>()
         {
             ["Anchovy"] = anchovy,
-            ["AngelFish"] = angelFish,
+            ["Angelfish"] = angelFish,
             ["Bass"] = bass,
-            ["CatFish"] = catFish,
+            ["Catfish"] = catFish,
             ["Clownfish"] = clownFish,
             ["Crab"] = crab,
-            ["GoldFish"] = goldFish,
+            ["Goldfish"] = goldFish,
             ["Pufferfish"] = pufferFish,
-            ["RainbowTrout"] = rainbowTrout,
+            ["Rainbowtrout"] = rainbowTrout,
             ["Surgeon"] = surgeon,
         };
 
@@ -137,14 +137,14 @@ public class FishData : MonoBehaviour
         FishDescriptions = new Dictionary<string, string>()
         {
             ["Anchovy"] = anchovyDescription,
-            ["AngelFish"] = angelFishDescription,
+            ["Angelfish"] = angelFishDescription,
             ["Bass"] = bassDescription,
-            ["CatFish"] = catFishDescription,
+            ["Catfish"] = catFishDescription,
             ["Clownfish"] = clownFishDescription,
             ["Crab"] = crabDescription,
-            ["GoldFish"] = goldFishDescription,
+            ["Goldfish"] = goldFishDescription,
             ["Pufferfish"] = pufferFishDescription,
-            ["RainbowTrout"] = rainbowTroutDescription,
+            ["Rainbowtrout"] = rainbowTroutDescription,
             ["Surgeon"] = surgeonDescription,
         };
     }
